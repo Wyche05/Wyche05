@@ -14,5 +14,6 @@ Here are some ideas to get you started:
 - ⚡ Fun fact: ...
 -->
 
-Hopefully I get the hang of this XD.
-I'm currently leaning how to code!
+### Hopefully I get the hang of this XD.
+
+### I'm currently leaning how to code!
