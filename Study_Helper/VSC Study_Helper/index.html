@@ -1,0 +1,44 @@
+<!-- popup.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="GELLY HELPER" content="width=device-width, initial-scale=1.0">
+    <title>Flashcard Popup</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            padding: 20px;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        #flashcardContent {
+            margin-top: 10px;
+        }
+
+        #saveButton {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h2>Flashcard Content</h2>
+    <div id="flashcardContent">
+        <!-- Display highlighted text here -->
+    </div>
+    <h2>Add Additional Information</h2>
+    <textarea id="additionalInfo" rows="4" cols="50" placeholder="Add notes, explanations, etc."></textarea>
+    <button id="saveButton">Save Flashcard</button>
+
+    <script src="popup.js"></script>
+</body>
+</html>

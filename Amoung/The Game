@@ -1,0 +1,77 @@
+
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.BinaryBitmap;
+import com.google.zxing.MultiFormatReader;
+import com.google.zxing.Result;
+import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
+import com.google.zxing.common.HybridBinarizer;
+import com.google.zxing.qrcode.QRCodeReader;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.io.File;
+import javax.imageio.ImageIO;
+
+public class QRCodeScannerApp extends JFrame {
+    private static final long serialVersionUID = 1L;
+    private JButton scanButton;
+
+    public QRCodeScannerApp() {
+        setTitle("QR Code Scanner");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(300, 100);
+        setLocationRelativeTo(null);
+        setLayout(new FlowLayout());
+
+        scanButton = new JButton("Scan QR Code");
+        scanButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                scanQRCode();
+            }
+        });
+
+        add(scanButton);
+    }
+
+    private void scanQRCode() {
+        JFileChooser fileChooser = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Image files", "jpg", "jpeg", "png", "gif");
+        fileChooser.setFileFilter(filter);
+
+        int result = fileChooser.showOpenDialog(this);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
+            try {
+                BufferedImage image = ImageIO.read(selectedFile);
+                BinaryBitmap binaryBitmap = new BinaryBitmap(new HybridBinarizer(new BufferedImageLuminanceSource(image)));
+                Result qrCodeResult = new MultiFormatReader().decode(binaryBitmap);
+
+                if (qrCodeResult != null) {
+                    JOptionPane.showMessageDialog(this, "QR Code Content: " + qrCodeResult.getText(), "QR Code Scanned", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(this, "No QR Code found in the selected image.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Error reading the selected image.", "Error", JOptionPane.ERROR_MESSAGE);
+            } catch (Exception e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Error decoding QR Code.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                QRCodeScannerApp app = new QRCodeScannerApp();
+                app.setVisible(true);
+            }
+        });
+    }
+}

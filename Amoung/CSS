@@ -1,0 +1,33 @@
+document.addEventListener('DOMContentLoaded', function () {
+    const fileInput = document.getElementById('fileInput');
+    const scanButton = document.getElementById('scanButton');
+    const resultElement = document.getElementById('result');
+
+    scanButton.addEventListener('click', function () {
+        fileInput.click();
+    });
+
+    fileInput.addEventListener('change', function () {
+        const file = fileInput.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                const image = new Image();
+                image.src = e.target.result;
+                image.onload = function () {
+                    scanQRCode(image);
+                };
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+    function scanQRCode(image) {
+        // Use a QR code scanning library or API here to decode the QR code
+        // Example: You can use the `jsQR` library or a similar one.
+        // Once you decode the QR code, update the resultElement with the content.
+        // For simplicity, we'll display the content as-is in this example.
+
+        resultElement.textContent = "QR Code Content: " + image.src;
+    }
+});
